@@ -1,0 +1,118 @@
+---
+title: "Data Scientist Toolbox Course"
+author: "Kishore Sathyanarayanan"
+date: "Sunday, December 21, 2014"
+output: html_document
+runtime: shiny
+---
+
+
+#### What you can expect to see
+
+=========================================
+
+ * Identifying & downloading datafile from Web Source.
+ * Reading the datafile for the Project.
+ * Viewing Data & its Structures
+ * Plotting Different graphs
+
+=========================================
+
+#### Software, Environment & Package Used
+
+=========================================
+ 
+ * R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
+ * Platform: x86_64-w64-mingw32/x64 (64-bit)
+ * Packages
+ 
+=========================================
+
+
+Datafile sourced from "http://www.ats.ucla.edu/stat/stata/examples/" and created as 'Projdata.csv'
+
+
+```{r echo = FALSE}
+## getwd()
+## list.files("Data")
+a <- read.csv("Data/ProjData.csv")
+```
+
+Sample Header data from the datafile.
+```{r echo = FALSE}
+
+head(a)
+
+```
+
+Let's understand the Structure of the Data ...
+```{r echo = FALSE}
+str(a)
+```
+
+Column wise Min, Median, Mean & Max of the data...
+```{r echo = FALSE}
+
+## dim(a)
+
+## a[1,"SNO"]
+## a[1,"Gender"]
+## a[2,"MeasureKGWeight"]
+## a[2,"MeasureCMHeight"]
+## is.matrix(a)
+
+summary(a)
+```
+
+Weight Median Deviations between Measured vs Reported.
+```{r echo = FALSE}
+ median(a$MeasureKGWeight) - median(a$ReportedKGWeight)
+
+```
+Height Median Deviations between Measured vs Reported.
+```{r echo = FALSE}
+ median(a$MeasureCMHeight) - median(a$ReportedCMHeight)
+
+```
+Weight Mean Deviations between Measured vs Reported.
+```{r echo = FALSE}
+ mean(a$MeasureKGWeight) - mean(a$ReportedKGWeight)
+
+```
+Height Mean Deviations between Measured vs Reported.
+```{r echo = FALSE}
+ mean(a$MeasureCMHeight) - mean(a$ReportedCMHeight)
+```
+
+Having understood the data, lets see the plots now.
+```{r echo = FALSE}
+
+Gender <- table(a$Gender)
+barplot(Gender, main="Gender Bar Chart",  xlab="Gender")
+
+KGWt <- table(a$MeasureKGWeight)
+barplot(KGWt, main="Weight Bar Chart",  xlab="Weight in KG")
+
+CMHt <- table(a$MeasureCMHeight)
+barplot(CMHt, main="Height Bar Chart",  xlab="Height in CM")
+
+ Stk1 <- table(a$Gender , a$MeasureKGWeight)
+ barplot(Stk1, main="Weight Distribution by Gender Bar Chart",
+   xlab="Male Vs Female Weights ", col=c("darkblue","red"),
+   legend = rownames(Stk1),beside = TRUE) 
+
+Stk2 <- table(a$Gender , a$MeasureCMHeight)
+ barplot(Stk2, main="Height Distribution by SNO Bar Chart",
+   xlab="Male Vs Female Heights ", col=c("darkblue","red"),
+   legend = rownames(Stk2),beside = TRUE) 
+
+
+ plot(a$Gender,a$MeasureKGWeight, main="Weight Scatterplot", 
+    xlab="Gender", ylab="Weight ", pch=10)
+
+ plot(a$Gender,a$MeasureCMHeight, main="Height Scatterplot", 
+    xlab="Gender", ylab="Height ", pch=10)
+
+
+```
+
